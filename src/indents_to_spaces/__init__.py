@@ -21,9 +21,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Files to convert",
     )
     parser.add_argument(
-        "--fmt",
+        "--run",
         type=str,
-        help="Comma-delimited command to run before indent replacement",
+        help="Comma-delimited commands to run before indent replacement",
     )
     parser.add_argument(
         "--spaces",
@@ -34,9 +34,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    if args.fmt:
-        fmt_cmd: list[str] = args.fmt.split(",")
-        subprocess.run(fmt_cmd)
+    if args.run:
+        run_cmd: list[str] = args.run.split(",")
+        subprocess.run(run_cmd)
 
     return convert_indents(args.filenames, args.spaces)
 
