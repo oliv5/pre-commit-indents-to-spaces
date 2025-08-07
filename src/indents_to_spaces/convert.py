@@ -15,19 +15,18 @@ def make_indent_replacer(
     Closes-over the chunk size so the replace function may be used for
     different indentations.
     """
-    pattern = re_compile(br"(^[ ]+)(.*$)")
+    pattern = re_compile(br"(^[\t]+)(.*$)")
 
-    def replace_spaces_with_tabs(m: Match[bytes]) -> bytes:
-        """Replace spaces with tabs in a provided match
+    def replace_tabs_with_spaces(m: Match[bytes]) -> bytes:
+        """Replace tabs with spaces in a provided match
 
         Expects match to have two groups: the indent and the rest of the line
         """
-        spaces_num = len(m[1])
-        tabs = spaces_num // chunk_size * b"\t"
-        spaces = spaces_num % chunk_size * b" "
-        return tabs + spaces + m[2]
+        tabs_num = len(m[1])
+        spaces = tabs_num * chunk_size * b" "
+        return spaces + m[2]
 
-    return pattern, replace_spaces_with_tabs
+    return pattern, replace_tabs_with_spaces
 
 
 S = TypeVar("S", str, bytes)  # Must be str or bytes
@@ -66,13 +65,13 @@ def replace_in_file(
     return retv
 
 
-def convert_indents(files: Sequence[IO[bytes]], spaces: int) -> int:
-    """Convert n spaces to tabs in indents of each file provided"""
-    pattern, replace_spaces_with_tabs = make_indent_replacer(spaces)
+def convert_indents(files: Sequence[IO[bytes]], tabs: int) -> int:
+    """Convert n tabs to spaces in indents of each file provided"""
+    pattern, replace_tabs_with_spaces = make_indent_replacer(tabs)
 
     retv = PASS
     for fp in files:
-        file_retv = replace_in_file(fp, pattern, replace_spaces_with_tabs)
+        file_retv = replace_in_file(fp, pattern, replace_tabs_with_spaces)
         retv |= file_retv
 
     return retv

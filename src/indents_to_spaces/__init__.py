@@ -1,13 +1,14 @@
 """Replace spaces with tabs in lines that begin with spaces."""
 from __future__ import annotations
 
+import sys
 import argparse
 import subprocess
 from typing import Sequence
 
 from .convert import convert_indents
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -27,9 +28,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--spaces",
         type=int,
-        default=2,
+        default=4,
         metavar="INTEGER",
-        help="How many spaces to replace with a tab",
+        help="How many spaces to replace a tab",
     )
     args = parser.parse_args(argv)
 

@@ -1,6 +1,6 @@
-- id: indents-to-tabs
-  name: Indents to tabs
-  description: Replace spaces with tabs in indents
-  entry: indents-to-tabs
+- id: indents-to-spaces
+  name: Indents to spaces
+  description: Replace tabs with spaces in indents
+  entry: indents-to-spaces
   language: python
   types: [text]

@@ -1,38 +1,32 @@
 # Please type "make help" in your terminal for a list of make targets.
 
-# ITT => Indents To Tabs
-# ITT_VENV is the name of directory to store the virtual environment
-ITT_VENV ?= .venv
+# ITS => Indents To Spaces
+# ITS_VENV is the name of directory to store the virtual environment
+ITS_VENV ?= .venv
 # ROOT_PYTHON is invoked to create the venv
 ROOT_PYTHON ?= python3
-# ITT_PYTHON is used to invoke packages in the venv
-ITT_PYTHON ?= $(ITT_VENV)/bin/python3
+# ITS_PYTHON is used to invoke packages in the venv
+ITS_PYTHON ?= $(ITS_VENV)/bin/python3
 
 .DEFAULT_GOAL:=help
 
-$(ITT_VENV)/bin/activate:
-	mkdir -p $(ITT_VENV)
-	$(ROOT_PYTHON) -m venv $(ITT_VENV)
-	$(ITT_VENV)/bin/pip install -r requirements-dev.txt
-	$(ITT_VENV)/bin/pip install -e .
+$(ITS_VENV)/bin/activate:
+	mkdir -p $(ITS_VENV)
+	$(ROOT_PYTHON) -m venv $(ITS_VENV)
+	$(ITS_VENV)/bin/pip install -r requirements-dev.txt
+	$(ITS_VENV)/bin/pip install -e .
 
 .PHONY: test ## Test the project
-test: $(ITT_VENV)/bin/activate
-	$(ITT_VENV)/bin/mypy src
-	$(ITT_VENV)/bin/mypy tests
-	$(ITT_VENV)/bin/pytest
-
-.PHONY: tox ## Test the project in multiple Python environments
-tox: $(ITT_VENV)/bin/activate
-	$(ITT_VENV)/bin/tox
+test: $(ITS_VENV)/bin/activate
+	$(ITS_VENV)/bin/pytest
 
 .PHONY: build ## Build the project for distribution
-build: clean $(ITT_VENV)/bin/activate
-	$(ITT_PYTHON) -m build
+build: clean $(ITS_VENV)/bin/activate
+	$(ITS_PYTHON) -m build
 
 .PHONY: release ## Upload build artifacts to PyPI
-release: $(ITT_VENV)/bin/activate
-	$(ITT_PYTHON) -m twine upload --repository testpypi dist/*
+release: $(ITS_VENV)/bin/activate
+	$(ITS_PYTHON) -m twine upload --repository testpypi dist/*
 
 .PHONY: clean ## Remove project development artifacts
 clean:
@@ -41,10 +35,10 @@ clean:
 
 .PHONY: purge ## Clean + remove caches, virtual environment
 purge: clean
-	rm -rf .mypy_cache
+	rm -rf src/indents_to_spaces/__pycache__
+	rm -rf tests/__pycache__
 	rm -rf .pytest_cache
-	rm -rf .tox
-	rm -rf $(ITT_VENV)
+	rm -rf $(ITS_VENV)
 
 .PHONY: help ## List make targets with description
 help:

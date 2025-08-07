@@ -1,4 +1,10 @@
-# Pre-Commit Hook: Convert indents (from spaces) to tabs
+# Pre-Commit Hook: Convert indents from tabs to spaces
+
+This project is a both a fork and the exact opposite of Andrew Pinkham's
+[pre-commit-indents-to-tabs](https://github.com/jambonrose/pre-commit-indents-to-tabs)
+plugin.
+
+It converts all indents from tabs to spaces when used with [pre-commit](https://pre-commit.com).
 
 ## Usage
 
@@ -10,27 +16,27 @@ The code below demonstrates a minimal configuration for usage in
 `.pre-commit-config.yaml`.
 
 ```yaml
-- repo: https://github.com/jambonrose/pre-commit-indents-to-tabs
+- repo: https://github.com/oliv5/pre-commit-indents-to-spaces
   rev: v0.0.1
   hooks:
       - id: indents-to-tabs
+        args: ["--spaces=4"]
 ```
 
-The configuration below will run the `terraform fmt -write` command
-before replacing spaces with tabs in the indents of Terraform files. The
-configuration below also demonstrats the use of the `--spaces` flag,
-although it is technically redundant as `2` is the default.
+It is possible to set few plugin parameters. The exemple below forces to
+replace each indent by 8 spaces characters instead of the default 4.
 
 ```yaml
-- repo: https://github.com/jambonrose/pre-commit-indents-to-tabs
+- repo: https://github.com/oliv5/pre-commit-indents-to-spaces
   rev: v0.0.1
   hooks:
       - id: indents-to-tabs
-        args: ["--fmt=terraform,fmt,-write", "--spaces=2"]
-        types: ["terraform"]
+        args: ["--spaces=8"]
 ```
 
 ## Project Rationale
+
+*By Andrew Pinkham, the author of the original `pre-commit-indents-to-tabs`*
 
 I created this project as a reaction to the Terraform autoformatter.
 However, the project can be used in other circumstances.
@@ -49,3 +55,8 @@ alignment. Tabs allow people to set their own preference, a necessity
 for those with different needs.
 
 I hope this helps others with eye issues.
+
+## Credits
+
+Huge thanks to Andrew Pinkham, the author of the original [pre-commit-indents-to-tabs](https://github.com/jambonrose/pre-commit-indents-to-tabs)
+plugin.
