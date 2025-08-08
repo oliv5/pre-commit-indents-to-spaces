@@ -14,16 +14,18 @@ def make_indent_replacer(
     Closes-over the chunk size so the replace function may be used for
     different indentations.
     """
-    pattern = re_compile(br"^( *)([\t]+)(.*$)")
+    pattern = re_compile(br"^([ \t]+)(.*$)")
 
     def replace_tabs_with_spaces(m: Match[bytes]) -> bytes:
         """Replace tabs with spaces in a provided match
 
         Expects match to have two groups: the indent and the rest of the line
         """
-        tabs_num = len(m[2])
-        spaces = tabs_num * chunk_size * b" "
-        return m[1] + spaces + m[3]
+        m1 = str(m[1])
+        tabs_num = m1.count("\\t")
+        spaces_num = m1.count(" ")
+        spaces = (tabs_num * chunk_size + spaces_num) * b" "
+        return spaces + m[2]
 
     return pattern, replace_tabs_with_spaces
 
