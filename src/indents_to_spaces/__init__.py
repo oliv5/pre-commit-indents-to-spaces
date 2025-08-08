@@ -8,7 +8,7 @@ from typing import Sequence
 
 from .convert import convert_indents
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 
 def main(argv: Sequence[str] | None = None) -> int:
