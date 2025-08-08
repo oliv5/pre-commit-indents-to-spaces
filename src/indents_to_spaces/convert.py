@@ -1,15 +1,14 @@
 """Core logic to convert indents in a file from spaces to tabs"""
-from __future__ import annotations
 
 from re import compile as re_compile, sub
-from typing import IO, Callable, Match, Pattern, Sequence, TypeVar
+from typing import IO, Callable, Match, Pattern, Sequence, TypeVar, Union
 
 from .pass_fail_constants import FAIL, PASS
 
 
 def make_indent_replacer(
     chunk_size: int,
-) -> tuple[Pattern[bytes], Callable[[Match[bytes]], bytes]]:
+) -> tuple:
     """Create pattern & replace function for use with Python's re.sub
 
     Closes-over the chunk size so the replace function may be used for
@@ -33,7 +32,7 @@ S = TypeVar("S", str, bytes)  # Must be str or bytes
 
 
 def replace_in_file(
-    fp: IO[S], pattern: S | Pattern[S], replace: Callable[[Match[S]], S]
+    fp: IO, pattern: Union[S, Pattern], replace: Callable
 ) -> int:
     """Use re.sub to replace all lines in fp matching pattern.
 
@@ -65,7 +64,7 @@ def replace_in_file(
     return retv
 
 
-def convert_indents(files: Sequence[IO[bytes]], tabs: int) -> int:
+def convert_indents(files: Sequence, tabs: int) -> int:
     """Convert n tabs to spaces in indents of each file provided"""
     pattern, replace_tabs_with_spaces = make_indent_replacer(tabs)
 

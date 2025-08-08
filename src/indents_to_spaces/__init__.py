@@ -1,17 +1,16 @@
 """Replace spaces with tabs in lines that begin with spaces."""
-from __future__ import annotations
 
 import sys
 import argparse
 import subprocess
-from typing import Sequence
+from typing import Sequence, Union
 
 from .convert import convert_indents
 
 __version__ = "0.0.2"
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Union[Sequence, None] = None) -> int:
     """Convert indents when invoked from command line"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
