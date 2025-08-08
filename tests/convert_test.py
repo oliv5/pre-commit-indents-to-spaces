@@ -14,8 +14,8 @@ from .file_utils import load_file, load_file_to_buffer
     [
         param("spaces_2.tf", "spaces_2.tf", 2, id="spaces_2"),
         param("spaces_4.tf", "spaces_4.tf", 4, id="spaces_4"),
-        param("indent_error.tf", "indent_error.tf", 2, id="indent_error_2"),
-        param("indent_error.tf", "indent_error.tf", 4, id="indent_error_4"),
+        param("indent_error_spaces_2.tf", "indent_error_spaces_2.tf", 2, id="error_spaces_2"),
+        param("indent_error_spaces_4.tf", "indent_error_spaces_4.tf", 4, id="error_spaces_4"),
     ],
 )
 def test_convert_indents_no_changes(
@@ -36,8 +36,10 @@ def test_convert_indents_no_changes(
     [
         param("tabs.tf", "spaces_2.tf", 2, id="tabs_2"),
         param("tabs.tf", "spaces_4.tf", 4, id="tabs_4"),
-        param("indent_error_tabs.tf", "indent_error_spaces_2.tf", 2, id="error_tabs_2"),
-        param("indent_error_tabs.tf", "indent_error_spaces_4.tf", 4, id="error_tabs_4"),
+        param("indent_error_tabs.tf", "indent_error_spaces_2.tf", 2, id="error_tabs_20"),
+        param("indent_error_tabs.tf", "indent_error_spaces_4.tf", 4, id="error_tabs_40"),
+        param("indent_error_tabs_2.tf", "indent_error_spaces_2.tf", 2, id="error_tabs_21"),
+        param("indent_error_tabs_4.tf", "indent_error_spaces_4.tf", 4, id="error_tabs_41"),
     ],
 )
 def test_convert_indents_changes(
